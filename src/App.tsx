@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TodoList } from './TodoList';
+import { AddTodoForm } from './AddTodoForm';
 
 const initialTodos: Todo[] = [
   {
@@ -15,7 +16,7 @@ const initialTodos: Todo[] = [
 function App() {
   const [todos, setTodos] = useState(initialTodos);
 
-  const toggleTodo = (selectTodo: Todo) => {
+  const toggleTodo: ToggleTodo = (selectTodo: Todo) => {
     const newTodos = todos.map(todo => {
       if (todo !== selectTodo) return todo;
 
@@ -28,10 +29,23 @@ function App() {
     setTodos(newTodos);
   }
 
-  return <TodoList
-    todos={todos}
-    toggleTogo={toggleTodo}
-  />
+  const addTodo: AddTodo = (text: string) => {
+    setTodos([
+      ...todos,
+      {
+        text: text,
+        complete: false,
+      }
+    ]);
+  }
+
+  return <>
+    <TodoList
+      todos={todos}
+      toggleTogo={toggleTodo}
+    />
+    <AddTodoForm addTodo={addTodo} />
+  </>
 }
 
 export default App;
